@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "yourdockerhubusername/my-app"
+        IMAGE_NAME = "elango7666/my-app"
         REGISTRY = "docker.io"
-        DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
-        GITHUB_CREDENTIALS_ID = "github-credentials"
+        DOCKER_CREDENTIALS_ID = "docker-hub-creds"
+        GITHUB_CREDENTIALS_ID = "github"
         APP_DIR = "/opt/docker-kec"
     }
 
