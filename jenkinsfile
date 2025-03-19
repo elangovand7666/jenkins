@@ -18,7 +18,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Ensure paths with spaces are properly quoted
+                    // Handle path with spaces correctly by quoting it
                     def appDir = "${env.WORKSPACE}/jenkins"  // Dynamically use the workspace location
                     sh """
                     cd "${appDir}"
@@ -49,6 +49,7 @@ pipeline {
         stage('Deploy using Docker Compose') {
             steps {
                 script {
+                    // Handle path with spaces correctly by quoting it
                     def appDir = "${env.WORKSPACE}/jenkins"  // Dynamically use the workspace location
                     sh """
                     cd "${appDir}"
