@@ -6,7 +6,7 @@ pipeline {
         REGISTRY = "docker.io"
         DOCKER_CREDENTIALS_ID = "docker-hub-creds"
         GITHUB_CREDENTIALS_ID = "github"
-        APP_DIR = "/opt/docker-kec"
+        APP_DIR = "/opt/jenkins"
     }
 
     stages {
