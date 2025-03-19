@@ -20,7 +20,10 @@ pipeline {
                 script {
                     // Ensure paths with spaces are properly quoted
                     def appDir = "${env.WORKSPACE}/jenkins"  // Dynamically use the workspace location
-                    sh "cd \"${appDir}\" && docker build -t $IMAGE_NAME:latest ."
+                    sh """
+                    cd "${appDir}"
+                    docker build -t $IMAGE_NAME:latest .
+                    """
                 }
             }
         }
@@ -47,7 +50,11 @@ pipeline {
             steps {
                 script {
                     def appDir = "${env.WORKSPACE}/jenkins"  // Dynamically use the workspace location
-                    sh "cd \"${appDir}\" && docker-compose down && docker-compose up -d"
+                    sh """
+                    cd "${appDir}"
+                    docker-compose down
+                    docker-compose up -d
+                    """
                 }
             }
         }
