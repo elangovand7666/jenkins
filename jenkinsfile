@@ -6,21 +6,21 @@ pipeline {
         REGISTRY = "docker.io"
         DOCKER_CREDENTIALS_ID = "docker-hub-creds"
         GITHUB_CREDENTIALS_ID = "github"
-        APP_DIR = "${env.WORKSPACE}/jenkins"  // Dynamically referencing the workspace
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/elangovand7666/jenkins', branch: 'main'
+                checkout scm
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Ensure the path is quoted for spaces and dynamically use the Jenkins workspace
-                    sh "cd \"${env.WORKSPACE}/jenkins\" && docker build -t $IMAGE_NAME:latest ."
+                    // Ensure paths with spaces are properly quoted
+                    def appDir = "${env.WORKSPACE}/jenkins"  // Dynamically use the workspace location
+                    sh "cd \"${appDir}\" && docker build -t $IMAGE_NAME:latest ."
                 }
             }
         }
@@ -46,8 +46,8 @@ pipeline {
         stage('Deploy using Docker Compose') {
             steps {
                 script {
-                    // Ensure the path is quoted for spaces and dynamically use the Jenkins workspace
-                    sh "cd \"${env.WORKSPACE}/jenkins\" && docker-compose down && docker-compose up -d"
+                    def appDir = "${env.WORKSPACE}/jenkins"  // Dynamically use the workspace location
+                    sh "cd \"${appDir}\" && docker-compose down && docker-compose up -d"
                 }
             }
         }
