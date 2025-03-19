@@ -6,7 +6,7 @@ pipeline {
         REGISTRY = "docker.io"
         DOCKER_CREDENTIALS_ID = "docker-hub-creds"
         GITHUB_CREDENTIALS_ID = "github"
-        APP_DIR = "${env.WORKSPACE}/jenkins"  // Use Jenkins workspace path
+        APP_DIR = "${env.WORKSPACE}/jenkins"  // Using Jenkins workspace path
     }
 
     stages {
@@ -19,8 +19,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Ensure the directory exists inside the Jenkins workspace
-                    sh "cd $APP_DIR && docker build -t $IMAGE_NAME:latest ."
+                    // Ensure the directory exists in the Jenkins workspace path
+                    sh "cd '${env.WORKSPACE}/jenkins' && docker build -t $IMAGE_NAME:latest ."
                 }
             }
         }
@@ -46,8 +46,7 @@ pipeline {
         stage('Deploy using Docker Compose') {
             steps {
                 script {
-                    // Make sure Docker Compose is executed from the correct directory in the Jenkins workspace
-                    sh "cd $APP_DIR && docker-compose down && docker-compose up -d"
+                    sh "cd '${env.WORKSPACE}/jenkins' && docker-compose down && docker-compose up -d"
                 }
             }
         }
